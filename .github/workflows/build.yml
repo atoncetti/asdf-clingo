@@ -23,20 +23,14 @@ jobs:
       - name: Checkout plugin
         uses: actions/checkout@v4
 
-      - name: Install asdf
+      - name: Install and test with asdf
         run: |
           git clone https://github.com/asdf-vm/asdf.git $HOME/.asdf
-          echo "$HOME/.asdf/bin" >> $GITHUB_PATH
-          echo "$HOME/.asdf/shims" >> $GITHUB_PATH
-
-      - name: Add plugin
-        run: asdf plugin add clingo $GITHUB_WORKSPACE
-
-      - name: Install clingo
-        run: asdf install clingo latest
-
-      - name: Test clingo
-        run: asdf global clingo latest && clingo --version
+          . $HOME/.asdf/asdf.sh
+          asdf plugin add clingo $GITHUB_WORKSPACE
+          asdf install clingo latest
+          asdf set --home clingo latest
+          clingo --version
 
   lint:
     name: Shellcheck
