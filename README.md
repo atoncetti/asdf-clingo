@@ -6,7 +6,7 @@ a grounder and solver for logic programs from the [Potassco](https://potassco.or
 ## Install
 
 ```bash
-asdf plugin add clingo https://github.com/antonio/asdf-clingo.git
+asdf plugin add clingo https://github.com/atoncetti/asdf-clingo.git
 ```
 
 ## Use
