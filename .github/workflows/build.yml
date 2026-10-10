@@ -25,11 +25,18 @@ jobs:
 
       - name: Install and test with asdf
         run: |
-          git clone https://github.com/asdf-vm/asdf.git $HOME/.asdf
-          . $HOME/.asdf/asdf.sh
+          ASDF_VERSION=$(curl -fsSL https://api.github.com/repos/asdf-vm/asdf/releases/latest | grep tag_name | cut -d'"' -f4)
+          OS=$(uname -s | tr '[:upper:]' '[:lower:]')
+          ARCH=$(uname -m)
+          if [ "$ARCH" = "x86_64" ]; then ARCH="amd64"; fi
+          ASDF_ARCHIVE="asdf-${ASDF_VERSION}-${OS}-${ARCH}.tar.gz"
+          mkdir -p $HOME/.asdf/bin
+          curl -fsSL "https://github.com/asdf-vm/asdf/releases/download/${ASDF_VERSION}/${ASDF_ARCHIVE}" | tar -xz -C $HOME/.asdf/bin
+          chmod +x $HOME/.asdf/bin/asdf
+          export PATH="$HOME/.asdf/bin:$HOME/.asdf/shims:$PATH"
           asdf plugin add clingo $GITHUB_WORKSPACE
           asdf install clingo latest
-          asdf set --home clingo latest
+          asdf global clingo latest
           clingo --version
 
   lint:
