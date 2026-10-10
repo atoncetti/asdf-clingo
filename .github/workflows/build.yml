@@ -3,9 +3,6 @@ on:
   push:
     branches: [master]
   pull_request:
-    branches: [master]
-  schedule:
-    - cron: "0 0 * * 0"
 
 jobs:
   plugin_test:
@@ -27,6 +24,7 @@ jobs:
         uses: asdf-vm/actions/plugin-test@v3
         with:
           command: clingo --version
+          gitref: main
 
   lint:
     name: Shellcheck
