@@ -1,0 +1,40 @@
+name: Build
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: "0 0 * * 0"
+
+jobs:
+  plugin_test:
+    name: asdf plugin test
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Install build dependencies (Ubuntu)
+        if: runner.os == 'Linux'
+        run: sudo apt-get install -y cmake g++
+
+      - name: Install build dependencies (macOS)
+        if: runner.os == 'macOS'
+        run: brew install cmake
+
+      - name: asdf plugin test
+        uses: asdf-vm/actions/plugin-test@v3
+        with:
+          command: clingo --version
+
+  lint:
+    name: Shellcheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Shellcheck
+        uses: ludeeus/action-shellcheck@master
+        with:
+          scandir: ./bin
+          severity: warning
