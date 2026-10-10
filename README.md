@@ -19,7 +19,7 @@ asdf install clingo latest
 asdf install clingo 5.8.2
 
 # Set a global version
-asdf global clingo latest
+asdf set --home clingo latest
 
 # Use the tool
 clingo --version
