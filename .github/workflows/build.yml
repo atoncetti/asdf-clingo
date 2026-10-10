@@ -36,7 +36,7 @@ jobs:
           export PATH="$HOME/.asdf/bin:$HOME/.asdf/shims:$PATH"
           asdf plugin add clingo $GITHUB_WORKSPACE
           asdf install clingo latest
-          asdf global clingo latest
+          asdf set --home clingo latest
           clingo --version
 
   lint:
