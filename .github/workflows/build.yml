@@ -21,10 +21,9 @@ jobs:
         run: brew install cmake
 
       - name: asdf plugin test
-        uses: asdf-vm/actions/plugin-test@v3
+        uses: asdf-vm/actions/plugin-test@v1
         with:
           command: clingo --version
-          asdf_branch: main
 
   lint:
     name: Shellcheck
