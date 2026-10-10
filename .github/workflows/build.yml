@@ -24,7 +24,7 @@ jobs:
         uses: asdf-vm/actions/plugin-test@v3
         with:
           command: clingo --version
-          gitref: main
+          asdf_branch: main
 
   lint:
     name: Shellcheck
